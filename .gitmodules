@@ -1,0 +1,3 @@
+[submodule "CppND-Program-a-Concurrent-Traffic-Simulation"]
+	path = CppND-Program-a-Concurrent-Traffic-Simulation
+	url = git@github.com:udacity/CppND-Program-a-Concurrent-Traffic-Simulation.git
