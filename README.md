@@ -3,7 +3,10 @@ Concurrent Traffic Simulation
 
 
 This project is part of the [C++ Nanodegree](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213)
- program from Udacity. I develop a traffic simulation in which vehicles move along streets and cross intersections. Each intersection will be equipped with a traffic light. I built a suitable and thread-safe communication protocol between vehicles and intersections to complete the simulation.
+ program from Udacity. I develop a traffic simulation in which vehicles move
+ along streets and cross intersections. Each intersection will be equipped with
+ a traffic light. I built a suitable and thread-safe communication protocol
+ between vehicles and intersections to complete the simulation.
 
 <p align="center"><img src="traffic_simulation.gif" alt="Example" width="65%" style="middle"></p>
 
@@ -21,7 +24,7 @@ To set up your environment to run the code in this repository, start by cloning
 
 ```shell
 $ make docker-build
-$ make ...
+$ make basic-simulator
 ```
 
 
@@ -32,7 +35,7 @@ In a terminal or command window, navigate to the top-level project directory
  repository.
 
 ```shell
-$ make ...
+$ make complete-simulator
 ```
 
 
