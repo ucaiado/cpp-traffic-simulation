@@ -20,9 +20,10 @@ class Vehicle;
 
 template <class T> class MessageQueue {
 public:
-  MessageQueue() {};
+  MessageQueue(){};
   void send(T &&msg);
   T receive();
+
 private:
   std::mutex _mutex;
   std::condition_variable _cond;
@@ -63,8 +64,7 @@ private:
   // TrafficLightPhase and use it within the infinite loop to push each new
   // TrafficLightPhase into it by calling send in conjunction with move
   // semantics.
-  // NOTE: create an object as a shared pointer to enable access by multi thrds
-  std::shared_ptr<MessageQueue<TrafficLightPhase>> _mesgqueue;
+  MessageQueue<TrafficLightPhase> _msgs_queue;
 
   std::condition_variable _condition;
   std::mutex _mutex;
