@@ -33,16 +33,25 @@ private:
 // Furthermore, there shall be the private member _currentPhase which can take
 // „red“ or „green“ as its value.
 
-class TrafficLight {
+enum TrafficLightPhase { green, red };
+
+class TrafficLight : public TrafficObject {
 public:
   // constructor / desctructor
+  TrafficLight();
 
   // getters / setters
+  TrafficLightPhase getCurrentPhase();
+  void setCurrentPhase(TrafficLightPhase thisPhase);
 
   // typical behaviour methods
+  void waitForGreen();
+  void simulate();
 
 private:
   // typical behaviour methods
+  void cycleThroughPhases();
+  TrafficLightPhase _currentPhase;
 
   // FP.4b : create a private member of type MessageQueue for messages of type
   // TrafficLightPhase
