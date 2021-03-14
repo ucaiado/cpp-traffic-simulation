@@ -1,6 +1,8 @@
 #include "TrafficLight.h"
 #include <iostream>
+#include <mutex>
 #include <random>
+#include <thread>
 
 /* Implementation of class "MessageQueue" */
 
@@ -45,25 +47,50 @@ TrafficLightPhase TrafficLight::getCurrentPhase()
 {
     return _currentPhase;
 }
+*/
 
-void TrafficLight::simulate()
-{
-    // FP.2b : Finally, the private method „cycleThroughPhases“ should be
-started in a thread when the public method „simulate“ is called. To do this, use
-the thread queue in the base class.
+void TrafficLight::simulate() {
+  // FP.2b : Finally, the private method „cycleThroughPhases“ should be
+  // started in a thread when the public method „simulate“ is called.
+  // To do this, use the thread queue in the base class.
+  threads.emplace_back(std::thread(&TrafficLight::cycleThroughPhases, this));
 }
 
 // virtual function which is executed in a thread
-void TrafficLight::cycleThroughPhases()
-{
-    // FP.2a : Implement the function with an infinite loop that measures the
-time between two loop cycles
-    // and toggles the current phase of the traffic light between red and green
-and sends an update method
-    // to the message queue using move semantics. The cycle duration should be a
-random value between 4 and 6 seconds.
-    // Also, the while-loop should use std::this_thread::sleep_for to wait 1ms
-between two cycles.
-}
+void TrafficLight::cycleThroughPhases() {
+  // FP.2a : Implement the function with an infinite loop that measures the
+  // time between two loop cycles and toggles the current phase of the
+  // traffic light between red and green and sends an update method to the
+  // message queue using move semantics. The cycle duration should be a
+  // random value between 4 and 6 seconds. Also, the while-loop should use
+  // std::this_thread::sleep_for to wait 1ms between two cycles.
 
-*/
+  // start time measurement
+    // NOTE: generate value 4~6
+  auto deltaLimit = (6 - std::rand() % 3);
+  auto t1 = std::chrono::system_clock::now();
+
+  while (true) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
+    auto t2 = std::chrono::system_clock::now();
+    auto deltaTime =
+        std::chrono::duration_cast<std::chrono::seconds>(t2 - t1).count();
+
+    if (deltaTime > deltaLimit) {
+      if (_currentPhase == red) {
+        _currentPhase == green;
+      } else if (_currentPhase == green) {
+        _currentPhase == red;
+      }
+
+      // <TODO>.send(std::move(_currentPhase));
+      // keep values to the next loop
+      auto deltaLimit = (6 - std::rand() % 3);
+      // std::cout << "TrafficLight::cycleThroughPhases::deltaLimit "
+      //           << deltaLimit
+      //           << std::endl;
+      auto t1 = std::chrono::system_clock::now();
+    }
+  }
+}
