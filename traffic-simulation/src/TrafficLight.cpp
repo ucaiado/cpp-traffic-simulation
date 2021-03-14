@@ -17,15 +17,18 @@ move semantics.
     // The received object should then be returned by the receive function.
 }
 
+*/
+
 template <typename T>
 void MessageQueue<T>::send(T &&msg)
 {
     // FP.4a : The method send should use the mechanisms
-std::lock_guard<std::mutex>
-    // as well as _condition.notify_one() to add a new message to the queue and
-afterwards send a notification.
+    // std::lock_guard<std::mutex> as well as _condition.notify_one()
+    // to add a new message to the queue and afterwards send a notification.
+    std::lock_guard<std::mutex> uLock(_mutex);
+    _queue.push_back(std::move(msg));
+    _cond.notify_one(); /
 }
-*/
 
 /* Implementation of class "TrafficLight" */
 
@@ -34,6 +37,7 @@ TrafficLight::TrafficLight()
 {
     _currentPhase = TrafficLightPhase::red;
 }
+
 
 void TrafficLight::waitForGreen()
 {
@@ -84,7 +88,7 @@ void TrafficLight::cycleThroughPhases() {
         _currentPhase == red;
       }
 
-      // <TODO>.send(std::move(_currentPhase));
+      _mesgqueue.send(std::move(_currentPhase));
       // keep values to the next loop
       auto deltaLimit = (6 - std::rand() % 3);
       // std::cout << "TrafficLight::cycleThroughPhases::deltaLimit "
