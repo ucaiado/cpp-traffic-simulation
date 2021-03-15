@@ -83,18 +83,26 @@ void TrafficLight::cycleThroughPhases() {
 
     if (deltaTime > deltaLimit) {
       if (_currentPhase == TrafficLightPhase::red) {
-        _currentPhase == TrafficLightPhase::green;
+        _currentPhase = TrafficLightPhase::green;
       } else if (_currentPhase == TrafficLightPhase::green) {
-        _currentPhase == TrafficLightPhase::red;
+        _currentPhase = TrafficLightPhase::red;
       }
 
       _msgs_queue.send(std::move(_currentPhase));
       // keep values to the next loop
-      auto deltaLimit = (6 - std::rand() % 3);
+      deltaLimit = (6 - std::rand() % 3);
+      t1 = std::chrono::system_clock::now();
       // std::cout << "TrafficLight::cycleThroughPhases::deltaLimit "
       //           << deltaLimit
+      //           << " deltaTime "
+      //           << deltaTime
+      //           << " _currentPhase "
+      //           << _currentPhase
+      //           << " is red?"
+      //           << (_currentPhase == TrafficLightPhase::red)
+      //           << " is green?"
+      //           << (_currentPhase == TrafficLightPhase::green)
       //           << std::endl;
-      auto t1 = std::chrono::system_clock::now();
     }
   }
 }
