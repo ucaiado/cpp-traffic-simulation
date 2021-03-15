@@ -80,10 +80,10 @@ void TrafficLight::cycleThroughPhases() {
         std::chrono::duration_cast<std::chrono::seconds>(t2 - t1).count();
 
     if (deltaTime > deltaLimit) {
-      if (_currentPhase == red) {
-        _currentPhase == green;
-      } else if (_currentPhase == green) {
-        _currentPhase == red;
+      if (_currentPhase == TrafficLightPhase::red) {
+        _currentPhase == TrafficLightPhase::green;
+      } else if (_currentPhase == TrafficLightPhase::green) {
+        _currentPhase == TrafficLightPhase::red;
       }
 
       _msgs_queue.send(std::move(_currentPhase));
