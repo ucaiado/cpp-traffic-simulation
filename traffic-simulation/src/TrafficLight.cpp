@@ -38,7 +38,6 @@ void TrafficLight::waitForGreen() {
   // the message queue. Once it receives TrafficLightPhase::green, the method
   // returns.
   while (true) {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1));
     auto this_phase = _msgs_queue.receive();
     if (this_phase == TrafficLightPhase::green) {
       return;
@@ -87,17 +86,6 @@ void TrafficLight::cycleThroughPhases() {
       // keep values to the next loop
       deltaLimit = (6 - std::rand() % 3);
       t1 = std::chrono::system_clock::now();
-      // std::cout << "TrafficLight::cycleThroughPhases::deltaLimit "
-      //           << deltaLimit
-      //           << " deltaTime "
-      //           << deltaTime
-      //           << " _currentPhase "
-      //           << _currentPhase
-      //           << " is red?"
-      //           << (_currentPhase == TrafficLightPhase::red)
-      //           << " is green?"
-      //           << (_currentPhase == TrafficLightPhase::green)
-      //           << std::endl;
     }
   }
 }
